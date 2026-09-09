@@ -29,6 +29,177 @@ body {
   color: var(--dark);
   min-height: 100vh;
 }
+
+/* ================= AUTHENTICATION UI ================= */
+.auth-screen {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 24px 16px 60px;
+}
+
+.auth-header-card {
+  background: var(--coral);
+  color: var(--dark);
+  border-radius: 24px;
+  border: 2px solid var(--coral-text);
+  box-shadow: 4px 4px 0px 0px var(--coral-text);
+  padding: 22px 20px;
+  margin-bottom: 18px;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+.auth-header-card::after {
+  content: "";
+  position: absolute;
+  right: -30px;
+  top: -30px;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: var(--coral-deep);
+  opacity: 0.5;
+}
+
+.auth-header-subtitle {
+  font-size: 13px;
+  font-weight: 600;
+  opacity: 0.75;
+  margin-bottom: 4px;
+  position: relative;
+}
+
+.auth-header-title {
+  font-size: 26px;
+  font-weight: 800;
+  margin-bottom: 0;
+  position: relative;
+  letter-spacing: -0.02em;
+}
+
+.auth-tabs {
+  display: flex;
+  gap: 8px;
+  background: var(--yellow);
+  border-radius: 20px;
+  padding: 12px;
+  margin-bottom: 18px;
+  border: 2px solid var(--dark);
+}
+
+.auth-tab {
+  flex: 1;
+  text-align: center;
+  padding: 10px;
+  background: var(--cream);
+  border-radius: 12px;
+  border: 2px solid var(--dark);
+  box-shadow: 4px 4px 0px 0px var(--dark);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  color: var(--muted);
+  user-select: none;
+  transition: all 0.25s ease;
+}
+
+.auth-tab.active {
+  background: var(--blue);
+  color: var(--blue-text);
+  border: 2px solid var(--blue-text);
+  box-shadow: 4px 4px 0px 0px var(--blue-text);
+}
+
+.auth-tab:active {
+  transform: translate(4px, 4px);
+  box-shadow: none;
+}
+
+.auth-card {
+  background: var(--blue);
+  border: 2px solid var(--dark);
+  box-shadow: 4px 4px 0px 0px var(--dark);
+  border-radius: var(--radius);
+  padding: 20px;
+}
+
+.auth-input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 2px solid var(--dark);
+  box-shadow: 4px 4px 0px 0px var(--dark);
+  font-size: 15px;
+  font-weight: 600;
+  background: #fff;
+  color: var(--dark);
+  font-family: inherit;
+}
+
+.auth-input::placeholder {
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.auth-input:focus {
+  outline: none;
+  background: var(--blue);
+  color: var(--blue-text);
+  border: 2px solid var(--blue-text);
+  box-shadow: 4px 4px 0px 0px var(--blue-text);
+}
+
+.auth-submit-btn {
+  width: 100%;
+  margin-top: 20px;
+  padding: 14px;
+  border-radius: 14px;
+  box-shadow: 4px 4px 0px 0px var(--dark);
+  border: 2px solid var(--dark);
+  background: var(--yellow-deep);
+  color: var(--yellow-text);
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.auth-submit-btn:active {
+  transform: translate(4px, 4px);
+  box-shadow: none;
+}
+
+.auth-submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.auth-error-msg {
+  color: var(--coral-deep);
+  font-size: 13px;
+  font-weight: 700;
+  margin-top: 20px;
+  padding: 8px;
+  border-radius: 12px;
+  text-align: center;
+  display: none;
+}
+
+.auth-success-msg {
+  color: var(--mint-text);
+  font-size: 13px;
+  font-weight: 700;
+  margin-top: 20px;
+  padding: 8px;
+  border-radius: 12px;
+  text-align: center;
+  display: none;
+}
+
+/* ================= MAIN APPLICATION UI ================= */
 .app {
   max-width: 500px;
   margin: 0 auto;

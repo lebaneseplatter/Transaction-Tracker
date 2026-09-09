@@ -7,34 +7,35 @@
   <title>Transaction Tracker</title>
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
 </head>
 
 <body>
 
   <!-- ============ AUTH SCREEN ============ -->
-  <div class="app" id="authScreen">
-    <div class="balance-card" style="text-align:center;">
-      <div class="balance-label">Welcome to</div>
-      <div class="balance-amount" style="font-size:26px; margin-bottom:0;">Transaction Tracker</div>
+  <div class="auth-screen" id="authScreen">
+    <div class="auth-header-card">
+      <div class="auth-header-subtitle">Welcome to</div>
+      <div class="auth-header-title">Transaction Tracker</div>
     </div>
 
-    <div class="tabs">
-      <div class="tab active" data-authtab="login">Log in</div>
-      <div class="tab" data-authtab="signup">Sign up</div>
+    <div class="auth-tabs">
+      <div class="auth-tab active" data-authtab="login">Log in</div>
+      <div class="auth-tab" data-authtab="signup">Sign up</div>
     </div>
 
-    <div class="card">
+    <form class="auth-card" id="authForm">
       <label for="authEmail">Email</label>
-      <input type="email" id="authEmail" placeholder="you@example.com" autocomplete="email">
+      <input type="email" id="authEmail" class="auth-input" placeholder="you@example.com" autocomplete="email" required>
 
       <label for="authPassword">Password</label>
-      <input type="password" id="authPassword" placeholder="••••••••" autocomplete="current-password">
+      <input type="password" id="authPassword" class="auth-input" placeholder="••••••••" autocomplete="current-password" required>
 
-      <div class="error-msg" id="authErrorMsg"></div>
-      <div class="success-msg" id="authSuccessMsg">Check your email to confirm your account, then log in.</div>
+      <div class="auth-error-msg" id="authErrorMsg"></div>
+      <div class="auth-success-msg" id="authSuccessMsg"></div>
 
-      <button class="submit-btn" id="authSubmitBtn">Log in</button>
-    </div>
+      <button type="submit" class="auth-submit-btn" id="authSubmitBtn">Log in</button>
+    </form>
   </div>
 
   <!-- ============ MAIN APP (hidden until logged in) ============ -->
@@ -110,9 +111,7 @@
       <button class="cancel-btn" id="cancelEditBtn">Cancel</button>
     </div>
   </div>
-  
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script>src = "congig.js" </script>
+
   <script>
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
@@ -125,6 +124,7 @@
     const authScreen = document.getElementById('authScreen');
     const mainApp = document.getElementById('mainApp');
     const authTabs = document.querySelectorAll('[data-authtab]');
+    const authForm = document.getElementById('authForm');
     const authEmail = document.getElementById('authEmail');
     const authPassword = document.getElementById('authPassword');
     const authErrorMsg = document.getElementById('authErrorMsg');
@@ -133,20 +133,27 @@
     const logoutBtn = document.getElementById('logoutBtn');
     let authMode = 'login';
 
+    function setAuthMode(mode) {
+      authMode = mode;
+      authTabs.forEach(t => {
+        t.classList.toggle('active', t.dataset.authtab === mode);
+      });
+      authSubmitBtn.textContent = mode === 'login' ? 'Log in' : 'Sign up';
+      authErrorMsg.style.display = 'none';
+      authSuccessMsg.style.display = 'none';
+    }
+
     authTabs.forEach(tab => {
       tab.addEventListener('click', () => {
-        authMode = tab.dataset.authtab;
-        authTabs.forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        authSubmitBtn.textContent = authMode === 'login' ? 'Log in' : 'Sign up';
-        authErrorMsg.style.display = 'none';
-        authSuccessMsg.style.display = 'none';
+        setAuthMode(tab.dataset.authtab);
       });
     });
 
-    authSubmitBtn.addEventListener('click', async () => {
+    authForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
       const email = authEmail.value.trim();
       const password = authPassword.value;
+
       authErrorMsg.style.display = 'none';
       authSuccessMsg.style.display = 'none';
 
@@ -157,26 +164,38 @@
       }
 
       authSubmitBtn.disabled = true;
+      authSubmitBtn.textContent = authMode === 'login' ? 'Logging in...' : 'Signing up...';
 
-      if (authMode === 'login') {
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
-        if (error) {
-          authErrorMsg.textContent = error.message;
-          authErrorMsg.style.display = 'block';
-        }
-      } else {
-        const { error } = await supabase.auth.signUp({ email, password });
-        if (error) {
-          authErrorMsg.textContent = error.message;
-          authErrorMsg.style.display = 'block';
+      try {
+        if (authMode === 'login') {
+          const { error } = await supabase.auth.signInWithPassword({ email, password });
+          if (error) {
+            authErrorMsg.textContent = error.message;
+            authErrorMsg.style.display = 'block';
+          }
         } else {
-          authSuccessMsg.style.display = 'block';
-          authEmail.value = '';
-          authPassword.value = '';
+          const { data, error } = await supabase.auth.signUp({ email, password });
+          if (error) {
+            authErrorMsg.textContent = error.message;
+            authErrorMsg.style.display = 'block';
+          } else {
+            if (data.session) {
+              currentUser = data.session.user;
+            } else {
+              authSuccessMsg.textContent = 'Account created! Check your email to confirm your account, then log in.';
+              authSuccessMsg.style.display = 'block';
+              authPassword.value = '';
+              setAuthMode('login');
+            }
+          }
         }
+      } catch (err) {
+        authErrorMsg.textContent = err.message || 'An unexpected error occurred.';
+        authErrorMsg.style.display = 'block';
+      } finally {
+        authSubmitBtn.disabled = false;
+        authSubmitBtn.textContent = authMode === 'login' ? 'Log in' : 'Sign up';
       }
-
-      authSubmitBtn.disabled = false;
     });
 
     logoutBtn.addEventListener('click', async () => {
