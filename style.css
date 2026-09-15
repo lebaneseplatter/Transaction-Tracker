@@ -60,7 +60,7 @@ h1 {
 .logout-btn {
   position: absolute;
   right: 10px;
-  padding: 7px 10px;
+  padding: 5px 8px;
   border-radius: 10px;
   border: 2px solid var(--coral-text);
   box-shadow: 2px 2px 0 0 var(--coral-text);
@@ -79,7 +79,7 @@ h1 {
 }
 .balance-card {
   background: var(--coral);
-  color: var(--dark);
+  color: var(--coral-text);
   border-radius: 24px;
   border: 3px solid var(--coral-text);
   box-shadow: 4px 4px 0 0 var(--coral-text);
@@ -136,7 +136,8 @@ h1 {
   border-radius: 16px;
   padding: 10px;
   margin-bottom: 18px;
-  border: 2px solid var(--dark);
+  border: 2px solid var(--yellow-text);
+  box-shadow: 3px 3px 0 0 var(--yellow-text);
 }
 .tab {
   flex: 1;
@@ -154,7 +155,7 @@ h1 {
   transition: all 0.25s ease;
 }
 .tab.active {
-  background: var(--blue-deep);
+  background: var(--blue);
   border: 2px solid var(--blue-text);
   box-shadow: 3px 3px 0 0 var(--blue-text);
   color: var(--blue-text);
