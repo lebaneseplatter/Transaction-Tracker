@@ -39,7 +39,7 @@ h1 {
   font-size: 20px;
   font-weight: 800;
   margin: 0 0 20px;
-  color: var(--dark);
+  color: var(--blue-text);
   letter-spacing: -0.01em;
 }
 .topbar {
@@ -48,18 +48,23 @@ h1 {
   justify-content: center;
   position: relative;
   margin-bottom: 20px;
+  padding: 10px;
+  background: var(--blue);
+  border: 2px solid var(--blue-text);
+  box-shadow: 3px 3px 0 0 var(--blue-text);
+  border-radius: var(--radius);
 }
 .topbar h1 {
   margin: 0;
 }
 .logout-btn {
   position: absolute;
-  right: 0;
-  padding: 7px 12px;
+  right: 10px;
+  padding: 7px 10px;
   border-radius: 10px;
-  border: 2px solid var(--dark);
-  box-shadow: 2px 2px 0 0 var(--dark);
-  background: var(--cream);
+  border: 2px solid var(--coral-text);
+  box-shadow: 2px 2px 0 0 var(--coral-text);
+  background: var(--coral);
   color: var(--dark-soft);
   font-size: 12px;
   font-weight: 700;
@@ -313,7 +318,7 @@ input::placeholder {
 input:focus,
 select:focus {
   outline: none;
-  background: var(--blue-deep);
+  background: var(--blue);
   border: 2px solid var(--blue-text);
   box-shadow: 3px 3px 0 0 var(--blue-text);
   color: var(--blue-text);
