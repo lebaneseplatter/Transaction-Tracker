@@ -30,17 +30,24 @@ body {
   min-height: 100vh;
 }
 .app {
-  max-width: 500px;
+  max-width: 480px;
   margin: 0 auto;
-  padding: 24px 16px 60px;
+  padding: 24px 16px 0px;
 }
-
+h1 {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 800;
+  margin: 0 0 20px;
+  color: var(--dark);
+  letter-spacing: -0.01em;
+}
 .balance-card {
   background: var(--coral);
   color: var(--dark);
   border-radius: 24px;
-  border: 2px solid var(--coral-text);
-  box-shadow: 4px 4px 0px 0px var(--coral-text);
+  border: 3px solid var(--coral-text);
+  box-shadow: 4px 4px 0 0 var(--coral-text);
   padding: 22px 20px;
   margin-bottom: 18px;
   position: relative;
@@ -87,35 +94,12 @@ body {
   margin-left: 4px;
 }
 
-.logout-btn {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  z-index: 2;
-  background: rgba(255, 255, 255, 0.55);
-  border: 2px solid var(--coral-text);
-  color: var(--coral-text);
-  font-size: 11px;
-  font-weight: 800;
-  padding: 6px 10px;
-  border-radius: 10px;
-  cursor: pointer;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-}
-.logout-btn:hover {
-  background: rgba(255, 255, 255, 0.9);
-}
-.logout-btn:active {
-  transform: translate(1px, 1px);
-}
-
 .tabs {
   display: flex;
   gap: 8px;
   background: var(--yellow);
-  border-radius: 20px;
-  padding: 12px;
+  border-radius: 16px;
+  padding: 10px;
   margin-bottom: 18px;
   border: 2px solid var(--dark);
 }
@@ -123,49 +107,51 @@ body {
   flex: 1;
   text-align: center;
   padding: 10px;
-  background: var(--cream);
-  border-radius: 12px;
   border: 2px solid var(--dark);
-  box-shadow: 4px 4px 0px 0px var(--dark);
+  box-shadow: 3px 3px 0 0 var(--dark);
+  border-radius: 12px;
   font-size: 14px;
   font-weight: 700;
   cursor: pointer;
-  color: var(--muted);
+  background: var(--cream);
+  color: var(--dark);
   user-select: none;
   transition: all 0.25s ease;
 }
 .tab.active {
-  background: var(--blue);
-  color: var(--blue-text);
+  background: var(--blue-deep);
   border: 2px solid var(--blue-text);
-  box-shadow: 4px 4px 0px 0px var(--blue-text);
+  box-shadow: 3px 3px 0 0 var(--blue-text);
+  color: var(--blue-text);
 }
-
 .tab:active {
   transform: translate(4px, 4px);
   box-shadow: none;
 }
+
 .panel-wrap {
   position: relative;
+  /* overflow: hidden; */
 }
 .panel {
   display: none;
+  animation: fadeSlideIn 0.32s ease;
 }
 .panel.active {
   display: block;
 }
-.panel.leaving-left {
-  animation: fadeSlideOutLeft 0.2s ease forwards;
+/* .panel.leaving-left {
+  animation: fadeSlideOutLeft 0.22s ease forwards;
 }
 .panel.leaving-right {
-  animation: fadeSlideOutRight 0.2s ease forwards;
+  animation: fadeSlideOutRight 0.22s ease forwards;
 }
 .panel.entering-left {
-  animation: fadeSlideInFromLeft 0.3s ease;
+  animation: fadeSlideInFromLeft 0.32s ease;
 }
 .panel.entering-right {
-  animation: fadeSlideInFromRight 0.3s ease;
-}
+  animation: fadeSlideInFromRight 0.32s ease;
+} */
 
 @keyframes fadeSlideIn {
   from {
@@ -220,8 +206,8 @@ body {
 
 .card {
   background: var(--blue);
-  border: 2px solid var(--dark);
-  box-shadow: 4px 4px 0px 0px var(--dark);
+  border: 2px solid var(--blue-text);
+  box-shadow: 4px 4px 0 0 var(--blue-text);
   border-radius: var(--radius);
   padding: 20px;
 }
@@ -231,61 +217,47 @@ body {
   gap: 8px;
   margin-bottom: 16px;
 }
-.transaction-actions {
-  margin-top: 20px;
-  margin-bottom: 0;
-}
 .type-btn {
   flex: 1;
   padding: 12px;
   border-radius: 14px;
   border: 2px solid var(--dark);
-  box-shadow: 4px 4px 0px 0px var(--dark);
+  box-shadow: 3px 3px 0 0 var(--dark);
+  background: var(--cream);
   font-size: 14px;
   font-weight: 700;
   cursor: pointer;
-  transition:
-    transform 0.15s ease,
-    box-shadow 0.15s ease;
+  color: var(--dark-soft);
+  transition: all 0.15s;
 }
-
-.type-btn.credit {
-  background: var(--mint);
+.type-btn.credit.selected {
   border: 2px solid var(--mint-text);
-  box-shadow: 4px 4px 0px 0px var(--mint-text);
+  box-shadow: 3px 3px 0 0 var(--mint-text);
+  background: var(--mint);
   color: var(--mint-text);
 }
 .type-btn.credit:active {
-  background: var(--mint);
-  border: 2px solid var(--mint-text);
-  box-shadow: 4px 4px 0px 0px var(--mint-text);
-  color: var(--mint-text);
   transform: translate(4px, 4px);
   box-shadow: none;
 }
-.type-btn.debit {
+.type-btn.debit.selected {
   background: var(--coral);
   border: 2px solid var(--coral-text);
-  box-shadow: 4px 4px 0px 0px var(--coral-text);
+  box-shadow: 3px 3px 0 0 var(--coral-text);
   color: var(--coral-text);
 }
 .type-btn.debit:active {
-  background: var(--coral);
-  border: 2px solid var(--coral-text);
-  box-shadow: 4px 4px 0px 0px var(--coral-text);
-  color: var(--coral-text);
   transform: translate(4px, 4px);
   box-shadow: none;
 }
 
 label {
   display: block;
-  font-size: 23px;
+  font-size: 18px;
   font-weight: 700;
   color: var(--dark-soft);
   margin-bottom: 6px;
   margin-top: 14px;
-  margin-left: 10px;
 }
 label:first-of-type {
   margin-top: 0;
@@ -296,7 +268,7 @@ select {
   padding: 12px 14px;
   border-radius: 14px;
   border: 2px solid var(--dark);
-  box-shadow: 4px 4px 0px 0px var(--dark);
+  box-shadow: 3px 3px 0 0 var(--dark);
   font-size: 15px;
   font-weight: 600;
   background: #fff;
@@ -307,12 +279,14 @@ input::placeholder {
   font-weight: 500;
   color: var(--muted);
 }
-input:focus {
+
+input:focus,
+select:focus {
   outline: none;
-  background: var(--blue);
-  color: var(--blue-text);
+  background: var(--blue-deep);
   border: 2px solid var(--blue-text);
-  box-shadow: 4px 4px 0px 0px var(--blue-text);
+  box-shadow: 3px 3px 0 0 var(--blue-text);
+  color: var(--blue-text);
 }
 
 .submit-btn {
@@ -320,8 +294,8 @@ input:focus {
   margin-top: 20px;
   padding: 14px;
   border-radius: 14px;
-  box-shadow: 4px 4px 0px 0px var(--dark);
-  border: 2px solid var(--dark);
+  border: 2px solid var(--yellow-text);
+  box-shadow: 4px 4px 0 0 var(--yellow-text);
   background: var(--yellow-deep);
   color: var(--yellow-text);
   font-size: 15px;
@@ -331,15 +305,9 @@ input:focus {
     transform 0.15s ease,
     box-shadow 0.15s ease;
 }
-
 .submit-btn:active {
   transform: translate(4px, 4px);
   box-shadow: none;
-}
-
-.submit-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
 }
 
 .cancel-btn {
@@ -348,40 +316,18 @@ input:focus {
   padding: 12px;
   border-radius: 14px;
   border: 2px solid var(--dark);
-  box-shadow: 4px 4px 0px 0px var(--dark);
   background: var(--cream);
   color: var(--dark-soft);
   font-size: 14px;
   font-weight: 700;
   cursor: pointer;
-  transition:
-    transform 0.15s ease,
-    box-shadow 0.15s ease;
-}
-.cancel-btn:active{
-  transform: translate(4px, 4px);
-  box-shadow: none;
 }
 
 .error-msg {
   color: var(--coral-deep);
   font-size: 13px;
   font-weight: 700;
-  margin-top: 20px;
-  padding: 8px;
-  border-radius: 12px;
-  text-align: center;
-  display: none;
-}
-
-.success-msg {
-  color: var(--mint-text);
-  font-size: 13px;
-  font-weight: 700;
-  margin-top: 20px;
-  padding: 8px;
-  border-radius: 12px;
-  text-align: center;
+  margin-top: 6px;
   display: none;
 }
 
@@ -400,19 +346,19 @@ input:focus {
   padding: 11px;
   border-radius: 14px;
   border: 2px solid var(--yellow-text);
-  box-shadow: 4px 4px 0px 0px var(--yellow-text);
+  box-shadow: 4px 4px 0 0 var(--yellow-text);
   background: var(--yellow-deep);
   color: var(--yellow-text);
   font-size: 13px;
   font-weight: 800;
   cursor: pointer;
   margin-bottom: 16px;
-  transition:
+  transition: 
     transform 0.15s ease,
     box-shadow 0.15s ease;
+  
 }
-
-.export-btn:active {
+.export-btn:active{
   transform: translate(4px, 4px);
   box-shadow: none;
 }
@@ -537,7 +483,6 @@ input:focus {
 .modal-card {
   background: var(--cream);
   border: 2px solid var(--dark);
-  box-shadow: 4px 4px 0px 0px var(--dark);
   border-radius: 22px;
   padding: 20px;
   width: 100%;
