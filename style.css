@@ -346,11 +346,19 @@ select:focus {
   padding: 12px;
   border-radius: 14px;
   border: 2px solid var(--dark);
+  box-shadow: 4px 4px 0 0 var(--dark);
   background: var(--cream);
   color: var(--dark-soft);
   font-size: 14px;
   font-weight: 700;
   cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+.cancel-btn:active {
+  transform: translate(4px, 4px);
+  box-shadow: none;
 }
 
 .error-msg {
@@ -408,16 +416,19 @@ select:focus {
   display: flex;
   align-items: center;
   gap: 12px;
-  border: 2px solid var(--dark);
   border-radius: 16px;
   padding: 12px 14px;
   margin-bottom: 10px;
 }
 .txn-item.credit {
+  border: 2px solid var(--mint-text);
+  box-shadow: 4px 4px 0 0 var(--mint-text);
   background: var(--mint);
 }
 .txn-item.debit {
   background: var(--coral);
+  border: 2px solid var(--coral-text);
+  box-shadow: 4px 4px 0 0 var(--coral-text);
 }
 
 .txn-icon {
@@ -501,7 +512,7 @@ select:focus {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(43, 42, 40, 0.4);
+  background: var(--bg);
   align-items: center;
   justify-content: center;
   z-index: 10;
@@ -511,8 +522,9 @@ select:focus {
   display: flex;
 }
 .modal-card {
-  background: var(--cream);
-  border: 2px solid var(--dark);
+  background: var(--yellow);
+  border: 2px solid var(--yellow-text);
+  box-shadow: 4px 4px 0 0 var(--yellow-text);
   border-radius: 22px;
   padding: 20px;
   width: 100%;
