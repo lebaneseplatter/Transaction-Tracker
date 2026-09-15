@@ -42,6 +42,36 @@ h1 {
   color: var(--dark);
   letter-spacing: -0.01em;
 }
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-bottom: 20px;
+}
+.topbar h1 {
+  margin: 0;
+}
+.logout-btn {
+  position: absolute;
+  right: 0;
+  padding: 7px 12px;
+  border-radius: 10px;
+  border: 2px solid var(--dark);
+  box-shadow: 2px 2px 0 0 var(--dark);
+  background: var(--cream);
+  color: var(--dark-soft);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+.logout-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: none;
+}
 .balance-card {
   background: var(--coral);
   color: var(--dark);

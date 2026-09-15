@@ -20,10 +20,13 @@
     <button class="submit-btn" id="loginBtn">Log in</button>
   </div>
 </div>
-
+ 
 <div class="app" id="appRoot" style="display:none;">
-  <h1>Transaction tracker</h1>
-
+  <div class="topbar">
+    <h1>Transaction tracker</h1>
+    <button class="logout-btn" id="logoutBtn">Log out</button>
+  </div>
+ 
   <div class="balance-card">
     <div class="balance-label">Current balance</div>
     <div class="balance-amount" id="balance">₹0.00</div>
@@ -32,12 +35,12 @@
       <span>Debited<b id="totalDebit">₹0.00</b></span>
     </div>
   </div>
-
+ 
   <div class="tabs">
     <div class="tab active" data-tab="add">Add entry</div>
     <div class="tab" data-tab="history">History</div>
   </div>
-
+ 
   <div class="panel-wrap">
     <div class="panel active" id="panel-add">
       <div class="card">
@@ -45,19 +48,19 @@
           <button class="type-btn credit selected" id="btnCredit">Credit</button>
           <button class="type-btn debit" id="btnDebit">Debit</button>
         </div>
-
+ 
         <label for="amount">Amount</label>
         <input type="number" id="amount" placeholder="₹ 0.00" step="1.0" inputmode="decimal">
-
+ 
         <label for="note">Note (optional)</label>
         <input type="text" id="note" placeholder="e.g. Freelance payment, groceries">
-
+ 
         <div class="error-msg" id="errorMsg">Enter a valid amount</div>
-
+ 
         <button class="submit-btn" id="submitBtn">Add transaction</button>
       </div>
     </div>
-
+ 
     <div class="panel" id="panel-history">
       <div class="filter-row">
         <select id="filterType">
@@ -79,7 +82,7 @@
     </div>
   </div>
 </div>
-
+ 
 <div class="modal-overlay" id="editModal">
   <div class="modal-card">
     <div class="modal-title">Edit transaction</div>
@@ -96,16 +99,16 @@
     <button class="cancel-btn" id="cancelEditBtn">Cancel</button>
   </div>
 </div>
-
+ 
 <script>
 // SUPABASE_URL and SUPABASE_ANON_KEY now come from config.js (loaded above)
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
+ 
 let selectedType = 'credit';
 let editType = 'credit';
 let editId = null;
 let transactions = [];
-
+ 
 const btnCredit = document.getElementById('btnCredit');
 const btnDebit = document.getElementById('btnDebit');
 const amountInput = document.getElementById('amount');
@@ -116,7 +119,7 @@ const historyList = document.getElementById('historyList');
 const filterType = document.getElementById('filterType');
 const filterDate = document.getElementById('filterDate');
 const exportBtn = document.getElementById('exportBtn');
-
+ 
 const editModal = document.getElementById('editModal');
 const editBtnCredit = document.getElementById('editBtnCredit');
 const editBtnDebit = document.getElementById('editBtnDebit');
@@ -125,7 +128,7 @@ const editNote = document.getElementById('editNote');
 const editErrorMsg = document.getElementById('editErrorMsg');
 const saveEditBtn = document.getElementById('saveEditBtn');
 const cancelEditBtn = document.getElementById('cancelEditBtn');
-
+ 
 btnCredit.addEventListener('click', () => {
   selectedType = 'credit';
   btnCredit.classList.add('selected');
@@ -136,7 +139,7 @@ btnDebit.addEventListener('click', () => {
   btnDebit.classList.add('selected');
   btnCredit.classList.remove('selected');
 });
-
+ 
 editBtnCredit.addEventListener('click', () => {
   editType = 'credit';
   editBtnCredit.classList.add('selected');
@@ -147,25 +150,25 @@ editBtnDebit.addEventListener('click', () => {
   editBtnDebit.classList.add('selected');
   editBtnCredit.classList.remove('selected');
 });
-
+ 
 const tabOrder = ['add', 'history'];
 document.querySelectorAll('.tab').forEach(tab => {
   tab.addEventListener('click', () => {
     const current = document.querySelector('.panel.active').id.replace('panel-', '');
     const target = tab.dataset.tab;
     if (current === target) return;
-
+ 
     const dir = tabOrder.indexOf(target) > tabOrder.indexOf(current) ? 'right' : 'left';
-
+ 
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
     tab.classList.add('active');
-
+ 
     const currentPanel = document.getElementById('panel-' + current);
     const targetPanel = document.getElementById('panel-' + target);
-
+ 
     currentPanel.classList.remove('active');
     currentPanel.classList.add(dir === 'right' ? 'leaving-left' : 'leaving-right');
-
+ 
     setTimeout(() => {
       currentPanel.classList.remove('leaving-left', 'leaving-right');
       targetPanel.classList.add('active', dir === 'right' ? 'entering-right' : 'entering-left');
@@ -175,13 +178,13 @@ document.querySelectorAll('.tab').forEach(tab => {
     }, 220);
   });
 });
-
+ 
 async function loadTransactions() {
   const { data, error } = await supabaseClient
     .from('transactions')
     .select('*')
     .order('created_at', { ascending: false });
-
+ 
   if (error) {
     console.error('Failed to load transactions', error);
     transactions = [];
@@ -196,11 +199,11 @@ async function loadTransactions() {
   }
   render();
 }
-
+ 
 function formatMoney(n) {
   return '₹' + n.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
-
+ 
 function formatDay(date) {
   const today = new Date();
   const d = new Date(date);
@@ -212,20 +215,20 @@ function formatDay(date) {
   if (isYesterday) return 'Yesterday';
   return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
 }
-
+ 
 function formatTime(date) {
   return new Date(date).toLocaleTimeString('en-IN', { hour: 'numeric', minute: '2-digit' });
 }
-
+ 
 function getFilteredTransactions() {
   let list = [...transactions];
   const type = filterType.value;
   const dateRange = filterDate.value;
-
+ 
   if (type !== 'all') {
     list = list.filter(t => t.type === type);
   }
-
+ 
   if (dateRange !== 'all') {
     const now = Date.now();
     const dayMs = 24 * 60 * 60 * 1000;
@@ -241,10 +244,10 @@ function getFilteredTransactions() {
     }
     list = list.filter(t => t.timestamp >= cutoff);
   }
-
+ 
   return list.sort((a, b) => b.timestamp - a.timestamp);
 }
-
+ 
 function render() {
   let credit = 0, debit = 0;
   transactions.forEach(t => {
@@ -255,9 +258,9 @@ function render() {
   document.getElementById('balance').textContent = formatMoney(balance);
   document.getElementById('totalCredit').textContent = formatMoney(credit);
   document.getElementById('totalDebit').textContent = formatMoney(debit);
-
+ 
   const filtered = getFilteredTransactions();
-
+ 
   if (transactions.length === 0) {
     historyList.innerHTML = '<div class="empty-state">No transactions yet. Add your first one from the Add entry tab.</div>';
     return;
@@ -266,7 +269,7 @@ function render() {
     historyList.innerHTML = '<div class="empty-state">No transactions match these filters.</div>';
     return;
   }
-
+ 
   let html = '';
   let lastDay = null;
   filtered.forEach(t => {
@@ -292,7 +295,7 @@ function render() {
       </div>`;
   });
   historyList.innerHTML = html;
-
+ 
   historyList.querySelectorAll('[data-delete]').forEach(btn => {
     btn.addEventListener('click', async () => {
       const id = Number(btn.dataset.delete);
@@ -305,12 +308,12 @@ function render() {
       render();
     });
   });
-
+ 
   historyList.querySelectorAll('[data-edit]').forEach(btn => {
     btn.addEventListener('click', () => openEditModal(Number(btn.dataset.edit)));
   });
 }
-
+ 
 function openEditModal(id) {
   const txn = transactions.find(t => t.id === id);
   if (!txn) return;
@@ -328,12 +331,12 @@ function openEditModal(id) {
   }
   editModal.classList.add('active');
 }
-
+ 
 cancelEditBtn.addEventListener('click', () => {
   editModal.classList.remove('active');
   editId = null;
 });
-
+ 
 saveEditBtn.addEventListener('click', async () => {
   const amount = parseFloat(editAmount.value);
   if (!amount || amount <= 0) {
@@ -343,19 +346,19 @@ saveEditBtn.addEventListener('click', async () => {
   editErrorMsg.style.display = 'none';
   const roundedAmount = Math.round(amount * 100) / 100;
   const trimmedNote = editNote.value.trim();
-
+ 
   const { error } = await supabaseClient
     .from('transactions')
     .update({ type: editType, amount: roundedAmount, note: trimmedNote })
     .eq('id', editId);
-
+ 
   if (error) {
     console.error('Failed to update transaction', error);
     editErrorMsg.textContent = 'Could not save changes, try again';
     editErrorMsg.style.display = 'block';
     return;
   }
-
+ 
   const txn = transactions.find(t => t.id === editId);
   if (txn) {
     txn.type = editType;
@@ -366,10 +369,10 @@ saveEditBtn.addEventListener('click', async () => {
   editModal.classList.remove('active');
   editId = null;
 });
-
+ 
 filterType.addEventListener('change', render);
 filterDate.addEventListener('change', render);
-
+ 
 exportBtn.addEventListener('click', () => {
   const list = getFilteredTransactions();
   if (list.length === 0) return;
@@ -389,7 +392,7 @@ exportBtn.addEventListener('click', () => {
   a.click();
   URL.revokeObjectURL(url);
 });
-
+ 
 submitBtn.addEventListener('click', async () => {
   const amount = parseFloat(amountInput.value);
   if (!amount || amount <= 0) {
@@ -397,24 +400,24 @@ submitBtn.addEventListener('click', async () => {
     return;
   }
   errorMsg.style.display = 'none';
-
+ 
   const roundedAmount = Math.round(amount * 100) / 100;
   const note = noteInput.value.trim();
-
+ 
   submitBtn.disabled = true;
   const { data, error } = await supabaseClient
     .from('transactions')
     .insert([{ type: selectedType, amount: roundedAmount, note }])
     .select();
   submitBtn.disabled = false;
-
+ 
   if (error) {
     console.error('Failed to add transaction', error);
     errorMsg.textContent = 'Could not save, check your connection';
     errorMsg.style.display = 'block';
     return;
   }
-
+ 
   const row = data[0];
   transactions.push({
     id: row.id,
@@ -426,32 +429,32 @@ submitBtn.addEventListener('click', async () => {
   amountInput.value = '';
   noteInput.value = '';
   render();
-
+ 
   document.querySelector('.tab[data-tab="history"]').click();
 });
-
+ 
 amountInput.addEventListener('input', () => {
   errorMsg.style.display = 'none';
 });
-
+ 
 const loginOverlay = document.getElementById('loginOverlay');
 const loginEmail = document.getElementById('loginEmail');
 const loginPassword = document.getElementById('loginPassword');
 const loginBtn = document.getElementById('loginBtn');
 const loginError = document.getElementById('loginError');
 const appRoot = document.getElementById('appRoot');
-
+ 
 function showApp() {
   loginOverlay.classList.remove('active');
   appRoot.style.display = 'block';
   loadTransactions();
 }
-
+ 
 function showLogin() {
   loginOverlay.classList.add('active');
   appRoot.style.display = 'none';
 }
-
+ 
 async function ensureSession() {
   const { data: { session } } = await supabaseClient.auth.getSession();
   if (session) {
@@ -460,7 +463,7 @@ async function ensureSession() {
     showLogin();
   }
 }
-
+ 
 loginBtn.addEventListener('click', async () => {
   loginError.style.display = 'none';
   loginBtn.disabled = true;
@@ -477,11 +480,20 @@ loginBtn.addEventListener('click', async () => {
   loginPassword.value = '';
   showApp();
 });
-
+ 
+const logoutBtn = document.getElementById('logoutBtn');
+logoutBtn.addEventListener('click', async () => {
+  await supabaseClient.auth.signOut();
+  transactions = [];
+  loginEmail.value = '';
+  loginPassword.value = '';
+  showLogin();
+});
+ 
 loginPassword.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') loginBtn.click();
 });
-
+ 
 ensureSession();
 </script>
 </body>
