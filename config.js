@@ -1,2 +1,0 @@
-const SUPABASE_URL = 'https://aewnexhdyltowpappogt.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFld25leGhkeWx0b3dwYXBwb2d0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg5NDMyMTIsImV4cCI6MjEwNDUxOTIxMn0.-0Zqim9vnBV0gjLOUgr6aWqr0JpMqFFXrbaCbtXB-rg';
