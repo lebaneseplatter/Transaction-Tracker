@@ -25,7 +25,7 @@ body {
   margin: 0;
   font-family:
     -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  background: var(--bg);
+  background: var(--blue);
   color: var(--dark);
   min-height: 100vh;
 }
@@ -39,7 +39,7 @@ h1 {
   font-size: 20px;
   font-weight: 800;
   margin: 0 0 20px;
-  color: var(--blue-text);
+  color: var(--dark);
   letter-spacing: -0.01em;
 }
 .topbar {
@@ -49,19 +49,20 @@ h1 {
   position: relative;
   margin-bottom: 20px;
   padding: 10px;
-  background: var(--blue);
-  border: 2px solid var(--blue-text);
-  box-shadow: 3px 3px 0 0 var(--blue-text);
-  border-radius: var(--radius);
+  background: var(--bg);
+  border: 2px solid var(--dark);
+  box-shadow: 3px 3px 0 0 var(--dark);
+  border-radius: 40px;
 }
 .topbar h1 {
   margin: 0;
 }
 .logout-btn {
   position: absolute;
-  right: 10px;
-  padding: 5px 8px;
-  border-radius: 10px;
+  right: 12px;
+  top: 7px;
+  padding: 2px 6px;
+  border-radius: 50%;
   border: 2px solid var(--coral-text);
   box-shadow: 2px 2px 0 0 var(--coral-text);
   background: var(--coral);
@@ -72,14 +73,27 @@ h1 {
   transition:
     transform 0.15s ease,
     box-shadow 0.15s ease;
+  transition: 0.4s ease;
+  opacity: 0.75;
+  
+  img{
+    margin-top: 3px;
+    height: 20px;
+  }
 }
 .logout-btn:active {
   transform: translate(2px, 2px);
   box-shadow: none;
 }
+.logout-btn:hover{
+  /* border-radius: 10px; */
+  transition: 0.3s ease;
+  opacity: 1;
+  /* transform: scale(1.1); */
+}
 .balance-card {
   background: var(--coral);
-  color: var(--coral-text);
+  color: var(--dark);
   border-radius: 24px;
   border: 3px solid var(--coral-text);
   box-shadow: 4px 4px 0 0 var(--coral-text);
@@ -100,9 +114,10 @@ h1 {
   opacity: 0.5;
 }
 .balance-label {
+  color: var(--dark);
   font-size: 13px;
   font-weight: 600;
-  opacity: 0.75;
+  /* opacity: 0.75; */
   margin-bottom: 4px;
   position: relative;
 }
@@ -114,6 +129,7 @@ h1 {
   letter-spacing: -0.02em;
 }
 .balance-sub {
+  color: var(--dark);
   display: flex;
   gap: 20px;
   font-size: 13px;
@@ -133,7 +149,7 @@ h1 {
   display: flex;
   gap: 8px;
   background: var(--yellow);
-  border-radius: 16px;
+  border-radius: 30px;
   padding: 10px;
   margin-bottom: 18px;
   border: 2px solid var(--yellow-text);
@@ -145,7 +161,7 @@ h1 {
   padding: 10px;
   border: 2px solid var(--dark);
   box-shadow: 3px 3px 0 0 var(--dark);
-  border-radius: 12px;
+  border-radius: 20px;
   font-size: 14px;
   font-weight: 700;
   cursor: pointer;
@@ -241,10 +257,10 @@ h1 {
 }
 
 .card {
-  background: var(--blue);
-  border: 2px solid var(--blue-text);
-  box-shadow: 4px 4px 0 0 var(--blue-text);
-  border-radius: var(--radius);
+  background: var(--bg);
+  border: 2px solid var(--dark);
+  box-shadow: 4px 4px 0 0 var(--dark);
+  border-radius: 40px;
   padding: 20px;
 }
 
@@ -256,10 +272,10 @@ h1 {
 .type-btn {
   flex: 1;
   padding: 12px;
-  border-radius: 14px;
+  border-radius: 20px;
   border: 2px solid var(--dark);
   box-shadow: 3px 3px 0 0 var(--dark);
-  background: var(--cream);
+  background: #FFFFFF;
   font-size: 14px;
   font-weight: 700;
   cursor: pointer;
@@ -302,7 +318,7 @@ input,
 select {
   width: 100%;
   padding: 12px 14px;
-  border-radius: 14px;
+  border-radius: 40px;
   border: 2px solid var(--dark);
   box-shadow: 3px 3px 0 0 var(--dark);
   font-size: 15px;
@@ -329,10 +345,10 @@ select:focus {
   width: 100%;
   margin-top: 20px;
   padding: 14px;
-  border-radius: 14px;
+  border-radius: 40px;
   border: 2px solid var(--yellow-text);
   box-shadow: 4px 4px 0 0 var(--yellow-text);
-  background: var(--yellow-deep);
+  background: var(--yellow);
   color: var(--yellow-text);
   font-size: 15px;
   font-weight: 800;
@@ -350,7 +366,7 @@ select:focus {
   width: 100%;
   margin-top: 10px;
   padding: 12px;
-  border-radius: 14px;
+  border-radius: 40px;
   border: 2px solid var(--dark);
   box-shadow: 4px 4px 0 0 var(--dark);
   background: var(--cream);
@@ -388,10 +404,10 @@ select:focus {
 .export-btn {
   width: 100%;
   padding: 11px;
-  border-radius: 14px;
+  border-radius: 40px;
   border: 2px solid var(--yellow-text);
   box-shadow: 4px 4px 0 0 var(--yellow-text);
-  background: var(--yellow-deep);
+  background: var(--yellow);
   color: var(--yellow-text);
   font-size: 13px;
   font-weight: 800;
@@ -422,7 +438,7 @@ select:focus {
   display: flex;
   align-items: center;
   gap: 12px;
-  border-radius: 16px;
+  border-radius: 40px;
   padding: 12px 14px;
   margin-bottom: 10px;
 }
@@ -500,10 +516,13 @@ select:focus {
   cursor: pointer;
   padding: 5px 7px;
   line-height: 1;
-  border-radius: 8px;
+  border-radius: 50%;
+  transition: 0.3s ease;
 }
 .txn-btn:hover {
   background: rgba(255, 255, 255, 0.85);
+  border-radius: 8px;
+  transition: 0.3s ease;
 }
 
 .empty-state {
@@ -518,23 +537,25 @@ select:focus {
   display: none;
   position: fixed;
   inset: 0;
-  background: var(--bg);
+  background: var(--blue);
   align-items: center;
   justify-content: center;
   z-index: 10;
   padding: 20px;
 }
 .modal-overlay.active {
+  animation: fadeSlideIn 0.2s ease;
   display: flex;
 }
 .modal-card {
-  background: var(--yellow);
-  border: 2px solid var(--yellow-text);
-  box-shadow: 4px 4px 0 0 var(--yellow-text);
-  border-radius: 22px;
+  background: var(--bg);
+  border: 2px solid var(--dark);
+  box-shadow: 4px 4px 0 0 var(--dark);
+  border-radius: 40px;
   padding: 20px;
   width: 100%;
   max-width: 380px;
+  animation: fadeSlideIn 0.3s ease;
 }
 .modal-title {
   font-size: 16px;
